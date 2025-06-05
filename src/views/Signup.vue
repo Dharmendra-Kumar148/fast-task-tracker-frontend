@@ -1,11 +1,20 @@
 <template>
-  <form @submit.prevent="signup">
-    <input v-model="username" placeholder="Username" required />
-    <input v-model="password" type="password" placeholder="Password" required />
-    <input v-model="passwordConfirm" type="password" placeholder="Confirm Password" required />
-    <button type="submit">Signup</button>
-    <div v-if="error" style="color: red;">{{ error }}</div>
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+      <h2 class="mb-4 text-center text-primary">Sign Up</h2>
+      <form @submit.prevent="signup" style="display:flex; flex-direction:column; gap:16px; padding:32px; background:white; border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.08); min-width:300px;">
+    <input v-model="username" class="form-control mb-3" placeholder="Username" required />
+    <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" required />
+    <input v-model="passwordConfirm" class="form-control mb-3" type="password" placeholder="Confirm Password" required />
+    <button type="submit"  class="btn btn-success w-100">Signup</button>
+    <div v-if="error" class="mt-3 text-danger text-center">{{ error }}</div>
   </form>
+  <router-link to="/login" class="btn btn-link mt-3 w-100"
+        style="text-decoration: none;">
+          Back
+        </router-link>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'

@@ -1,8 +1,10 @@
 <template>
-  <form @submit.prevent="addTask">
-    <input v-model="title" placeholder="Task Title" required />
-    <button type="submit">Add Task</button>
-    <div v-if="error" style="color: red;">{{ error }}</div>
+  <form @submit.prevent="addTask" class="card shadow p-3 mb-4 bg-white rounded" style="max-width: 400px; margin: 0 auto;">
+    <div class="mb-3">
+      <input v-model="title" class="form-control" placeholder="Task Title" required />
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Add Task</button>
+    <div v-if="error" class="mt-2 text-danger text-center">{{ error }}</div>
   </form>
 </template>
 <script setup lang="ts">

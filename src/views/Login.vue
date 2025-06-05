@@ -1,16 +1,22 @@
 <template>
-  <form @submit.prevent="login">
-    <input v-model="username" placeholder="Username" required />
-    <input v-model="password" type="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-    <div v-if="error" style="color: red;">{{ error }}</div>
-  </form>
-   <!-- <button @click="goToSignup" style="margin-top: 10px;">
-    Sign Up
-  </button> -->
-  <router-link to="/signup" style="margin-top: 10px; display: inline-block;">
-  Sign Up
-</router-link>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <h2 class="mb-4 text-center text-primary">Login</h2>
+        <form @submit.prevent="login">
+          <input v-model="username"
+          class="form-control mb-3" placeholder="Username" required />
+    <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" required />
+    <button type="submit" class="btn btn-success w-100">Login</button>
+    <div v-if="error" class="mt-3 text-danger text-center">
+      {{ error }}
+    </div>
+        </form>
+        <router-link to="/signup" class="btn btn-link mt-3 w-100"
+        style="text-decoration: none;">
+          Sign Up
+        </router-link>
+      </div>
+    </div>  
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
