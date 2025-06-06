@@ -7,6 +7,7 @@
           class="form-control mb-3" placeholder="Username" required />
     <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" required />
     <button type="submit" class="btn btn-success w-100">Login</button>
+    <Loading v-if="loading" />
     <div v-if="error" class="mt-3 text-danger text-center">
       {{ error }}
     </div>
@@ -18,19 +19,25 @@
       </div>
     </div>  
 </template>
+
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import axios from '../axios'
 import { useRouter } from 'vue-router'
+import Loading from '@/components/Loading.vue'
 
 const store = useStore()
 const router = useRouter()
 const username = ref<string>('')
 const password = ref<string>('')
 const error = ref<string>('')
+const loading = ref(false)
 
 const login = async () => {
+  loading.value = true
+  error.value = ''
   try {
     const { data } = await axios.post('/login', {
       username: username.value,
@@ -40,6 +47,8 @@ const login = async () => {
     router.push('/tasks')
   } catch (err: any) {
     error.value = err.response?.data.message || 'Login failed'
+  } finally {
+    loading.value = false
   }
 }
 const goToSignup = () => {

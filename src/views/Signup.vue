@@ -7,6 +7,7 @@
     <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" required />
     <input v-model="passwordConfirm" class="form-control mb-3" type="password" placeholder="Confirm Password" required />
     <button type="submit"  class="btn btn-success w-100">Signup</button>
+    <Loading v-if="loading" />
     <div v-if="error" class="mt-3 text-danger text-center">{{ error }}</div>
   </form>
   <router-link to="/login" class="btn btn-link mt-3 w-100"
@@ -20,14 +21,18 @@
 import { ref } from 'vue'
 import axios from '../axios'
 import { useRouter } from 'vue-router'
+import Loading from '@/components/Loading.vue'
 
 const username = ref<string>('')
 const password = ref<string>('')
 const passwordConfirm = ref<string>('')
 const error = ref<string>('')
 const router = useRouter()
+const loading = ref(false)
 
 const signup = async () => {
+  loading.value = true
+  error.value = ''
   try {
     await axios.post('/signup', {
       username: username.value,
@@ -37,6 +42,8 @@ const signup = async () => {
     router.push('/login')
   } catch (err: any) {
     error.value = err.response?.data.message || 'Signup failed'
+  } finally {
+    loading.value = false
   }
 }
 </script>

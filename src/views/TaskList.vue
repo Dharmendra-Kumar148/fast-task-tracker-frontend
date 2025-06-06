@@ -5,6 +5,7 @@
         <button @click="logout" class="btn btn-outline-danger btn-sm float-end">Logout</button>
     <h2 class="mb-4 text-primary">Tasks for {{ store.getters.username }}</h2>
     <TaskForm @added="fetchTasks" />
+    <Loading v-if="loading" />
     <ul class="list-group mt-4">
       <li v-for="task in tasks" :key="task._id"
       class="list-group-item d-flex align-items-center justify-content-between"
@@ -26,6 +27,7 @@ import axios from '../axios'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import TaskForm from '../components/TaskForm.vue'
+import Loading from '@/components/Loading.vue'
 
 interface Task {
   _id: string;
@@ -36,13 +38,19 @@ interface Task {
 const tasks = ref<Task[]>([])
 const store = useStore()
 const router = useRouter()
+const loading = ref(false)
 
 const fetchTasks = async () => {
+  loading.value = true
   try {
     const { data } = await axios.get('/tasks')
     tasks.value = data
   } catch (err: any) {
     if (err.response?.status === 401) router.push('/login')
+  } finally {
+
+    loading.value = false
+
   }
 }
 
